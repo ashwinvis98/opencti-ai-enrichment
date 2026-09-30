@@ -9,12 +9,20 @@ on:
 jobs:
   tests:
     runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        # 3.11 is what the Dockerfile runs, so the runtime version must stay
+        # green. 3.12 is covered because that is a version the suite has actually
+        # been run against by hand; pinning only one of the two would leave the
+        # other unverified by anything.
+        python-version: ["3.11", "3.12"]
     steps:
       - uses: actions/checkout@v4
 
       - uses: actions/setup-python@v5
         with:
-          python-version: "3.11"
+          python-version: ${{ matrix.python-version }}
 
       # Deliberately does NOT install requirements.txt. The suite stubs both
       # pycti and the Gemini SDK, makes no network calls and needs no
