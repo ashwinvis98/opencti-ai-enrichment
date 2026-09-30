@@ -140,7 +140,7 @@ adversaries using AI. Three that came up without my selecting for the theme:
 - *Attackers Abuse ChatGPT Custom GPTs to Deliver RAT via ClickFix*
   ([Huntress](https://www.huntress.com/blog/chatgpt-custom-gpts-clickfix-rat))
 - *The Closed Quorum: first reported autonomous AI C2 implant*
-  ([Cisco Talos](https://blog.talosintelligence.com/the-closed-quorum-inside-the-firs))
+  ([Cisco Talos](https://blog.talosintelligence.com/the-closed-quorum-inside-the-first-reported-autonomous-ai-c2-implant/))
 - *New RemControl Android Banking Trojan ... AI-Built Phishing*
   ([Cyber Press](https://cyberpress.org/remcontrol-trojan-steals-banking-pins/))
 

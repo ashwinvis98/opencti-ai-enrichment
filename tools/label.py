@@ -1,4 +1,4 @@
-"""Write ground-truth VERDICT/NOTE into the victim corpus -> v3_victims_labeled.csv
+"""Write ground-truth VERDICT/NOTE into the victim corpus -> victims_labeled.csv
 
 WHY THIS EXISTS: an earlier review pass produced
 per-row judgements that lived only in terminal output and were lost. Without
@@ -26,11 +26,22 @@ Detector calibration notes (all checked against the real strings first):
     are real organisations; they are wrong only in ROLE.
   - Trailing-dangle truncation detection hit 3/3 with zero false positives.
   - "emitted org shares no token with the claimed victim" is NOT by itself a
-     defect: it fires on correct domain->legal-name expansion (eracm.fr ->
-     'Ecole Regionale des Arts de Calais'). Only a post emitting >=2 unrelated
+     defect: it fires on correct domain->legal-name expansion (erac-calais.example
+     -> 'Ecole Regionale des Arts de Calais'). Only a post emitting >=2 unrelated
      orgs indicates a supply-chain customer sweep.
 
-Usage:  python sanity/v3_label.py [--report]
+THE CORPUS IS NOT IN THIS REPOSITORY. It is real breach reporting naming real
+organisations, so it is not publishable, and a fabricated substitute would produce
+labels that look like ground truth and are not. This file is published as the
+METHODOLOGY -- how to label defensibly, what not to guess at, and why the labels
+are trustworthy despite being machine-generated. Point it at your own corpus in the
+schema described in `expected_schema()` below.
+
+Usage:
+  python tools/label.py                 # label the corpus
+  python tools/label.py --report        # also list rows awaiting human judgement
+  python tools/label.py --audit         # list every title each suppression matched
+  python tools/label.py --schema        # print the expected input columns
 """
 import collections
 import csv
@@ -39,8 +50,50 @@ import re
 import sys
 
 HERE = os.path.dirname(os.path.abspath(__file__))
-SRC = os.path.join(HERE, "..", "v3_victims_windowed.csv")
-OUT = os.path.join(HERE, "..", "v3_victims_labeled.csv")
+SRC = os.environ.get("VICTIM_CORPUS") or os.path.join(
+    HERE, "..", "victims_windowed.csv")
+OUT = os.environ.get("VICTIM_CORPUS_LABELLED") or os.path.join(
+    HERE, "..", "victims_labeled.csv")
+
+
+def expected_schema():
+    """Input columns this expects, so the tool is usable against another corpus."""
+    return {
+        "name": "the organisation name the connector emitted as a victim",
+        "src_title": "title of the report it was emitted from (drives the "
+                     "report-class label; the single most important column)",
+        "decisions": "how many times this name was emitted across the corpus; "
+                     "used only to mark label confidence. Optional, defaults 1.",
+    }
+
+
+def _load(path):
+    """Read the corpus, or explain precisely what is missing and stop.
+
+    A bare FileNotFoundError traceback here would be a poor welcome for anyone who
+    cloned the repo and ran the tool, since the file is absent BY DESIGN.
+    """
+    if not os.path.exists(path):
+        print(f"corpus not found: {path}\n", file=sys.stderr)
+        print("This is expected on a fresh clone -- the corpus is real breach "
+              "reporting\nabout real organisations and is deliberately not "
+              "published. See the\nmodule docstring.\n", file=sys.stderr)
+        print("To run this against your own corpus, set VICTIM_CORPUS to a CSV "
+              "with:", file=sys.stderr)
+        for col, why in expected_schema().items():
+            print(f"    {col:12} {why}", file=sys.stderr)
+        raise SystemExit(2)
+    rows = list(csv.DictReader(open(path, encoding="utf-8")))
+    if not rows:
+        print(f"corpus is empty: {path}", file=sys.stderr)
+        raise SystemExit(2)
+    missing = [c for c in ("name", "src_title") if c not in rows[0]]
+    if missing:
+        print(f"corpus is missing required column(s): {', '.join(missing)}",
+              file=sys.stderr)
+        print("run with --schema to see what is expected", file=sys.stderr)
+        raise SystemExit(2)
+    return rows
 
 # ---------------------------------------------------------------- source class
 LEAK = re.compile(
@@ -186,7 +239,12 @@ ROLE_NOTE = {
 
 
 def main():
-    rows = list(csv.DictReader(open(SRC, encoding="utf-8")))
+    if "--schema" in sys.argv:
+        print("expected input columns:")
+        for col, why in expected_schema().items():
+            print(f"  {col:12} {why}")
+        return
+    rows = _load(SRC)
 
     # pre-compute which leak posts are customer sweeps
     nomatch = collections.defaultdict(list)
@@ -235,10 +293,11 @@ def main():
         r["VERDICT"], r["NOTE"] = verdict, note
         r["_src_class"], r["_report_class"] = sc, rc
 
-        # Label confidence. src_title in this corpus is the FIRST context only
-        # (the exporter records the first context only), so a row seen in several
-        # also have appeared in a report of a different class. Report-level labels
-        # on those rows rest on partial evidence and are marked medium.
+        # Label confidence. `src_title` records only the FIRST context a name was
+        # seen in, so a name emitted from several reports may also have appeared in
+        # a report of a DIFFERENT class than the one labelled here. Report-level
+        # labels on those rows therefore rest on partial evidence, and are marked
+        # medium rather than high.
         if verdict in ("REVIEW", "REVIEW_EXPANSION"):
             conf = "unlabelled"
         elif verdict == "OK_PRESUMED":

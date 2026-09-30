@@ -1,0 +1,42 @@
+# The image needs requirements.txt and enrichment/ and nothing else. Everything
+# below would otherwise be uploaded to the daemon as build context, and a couple
+# of entries would be actively bad to bake into an image.
+
+# Secrets and runtime state - never in an image.
+.env
+.env.*
+*.log
+ai_audit.log*
+ai_metrics.jsonl
+state/
+
+# History and CI.
+.git
+.gitignore
+.github
+
+# Development-only code. Deliberately not in the runtime image.
+tests/
+tools/
+
+# Docs.
+*.md
+docs/
+LICENSE
+
+# Python and test artefacts.
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.coverage*
+htmlcov/
+.mypy_cache/
+.ruff_cache/
+.venv/
+venv/
+
+# Editors / OS.
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db

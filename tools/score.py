@@ -13,9 +13,14 @@ Scoring is restricted to rows with an actual label. OK_PRESUMED counts as
 "is a victim" -- it is presumed, not verified, so a false positive against it is a
 *probable* not certain error, and that is called out separately.
 
+THE CORPUS IS NOT IN THIS REPOSITORY -- see the docstring of `label.py`, which
+produces it. This file is published as the methodology: the rule set worth
+comparing, and the scoring discipline that makes the comparison honest (notably
+that unlabelled collateral is counted rather than ignored).
+
 Usage:
-  python sanity/v3_score.py              # score all built-in rules
-  python sanity/v3_score.py --confident  # exclude presumed + medium-confidence rows
+  python tools/score.py              # score all built-in rules
+  python tools/score.py --confident  # exclude medium-confidence defect labels
 """
 import collections
 import csv
@@ -23,7 +28,8 @@ import os
 import sys
 
 HERE = os.path.dirname(os.path.abspath(__file__))
-SRC = os.path.join(HERE, "..", "v3_victims_labeled.csv")
+SRC = os.environ.get("VICTIM_CORPUS_LABELLED") or os.path.join(
+    HERE, "..", "victims_labeled.csv")
 
 DEFECT = ("NOT_VICTIM_ROLE", "NOT_VICTIM_SUPPLYCHAIN", "NOT_ENTITY_DESCRIPTOR",
           "TRUNCATED", "DUP_PREDECESSOR", "WRONG_ENTITY")
@@ -105,8 +111,38 @@ def score(rows, rule):
     return tp, fp, fn, tn, fp_rows, collateral
 
 
+def _load(path):
+    """Read the labelled corpus, or explain what is missing and stop.
+
+    Absent by design on a fresh clone, so a bare traceback would be misleading.
+    """
+    if not os.path.exists(path):
+        print(f"labelled corpus not found: {path}\n", file=sys.stderr)
+        print("This is expected on a fresh clone. The corpus is real breach "
+              "reporting about\nreal organisations and is deliberately not "
+              "published.\n", file=sys.stderr)
+        print("Produce one with `python tools/label.py` against your own corpus "
+              "(see\n`python tools/label.py --schema`), or point "
+              "VICTIM_CORPUS_LABELLED at it.", file=sys.stderr)
+        raise SystemExit(2)
+    rows = list(csv.DictReader(open(path, encoding="utf-8")))
+    if not rows:
+        print(f"labelled corpus is empty: {path}", file=sys.stderr)
+        raise SystemExit(2)
+    required = ("VERDICT", "tier", "_report_class", "_src_class",
+                "_label_confidence", "name", "src_title")
+    missing = [c for c in required if c not in rows[0]]
+    if missing:
+        print(f"labelled corpus is missing column(s): {', '.join(missing)}",
+              file=sys.stderr)
+        print("These are added by tools/label.py -- run that first.",
+              file=sys.stderr)
+        raise SystemExit(2)
+    return rows
+
+
 def main():
-    rows = list(csv.DictReader(open(SRC, encoding="utf-8")))
+    rows = _load(SRC)
     confident_only = "--confident" in sys.argv
     if confident_only:
         # Drop only the medium-confidence DEFECT labels. OK_PRESUMED rows must be

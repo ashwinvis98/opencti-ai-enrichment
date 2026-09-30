@@ -99,8 +99,13 @@ To run it against a platform:
 cp .env.example .env
 # fill in GEMINI_API_KEY, OPENCTI_TOKEN, CONNECTOR_ID
 docker build -t opencti-guarded-enrichment .
-docker run --env-file .env -v ./state:/state opencti-guarded-enrichment
+docker run --env-file .env -v enrichment-state:/state opencti-guarded-enrichment
 ```
+
+A **named volume** for `/state`, not a bind mount. The image creates `/state` owned
+by the container's unprivileged user, and a named volume inherits that; a bind
+mount onto a host directory owned by root leaves the container unable to write,
+and the only symptom is an audit log that never appears.
 
 `.env.example` ships the cautious defaults: `AI_READ_ONLY=true`,
 `AI_CREATE_STUBS=dry-run`, `CONNECTOR_AUTO=false`. In that posture the connector

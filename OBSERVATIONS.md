@@ -37,11 +37,11 @@ nearly bare — a title, a short description, a handful of indicators, and one o
 two links to anything meaningful. Two real examples:
 
 - *The Closed Quorum: Inside the first reported autonomous AI C2 implant*
-  ([Cisco Talos](https://blog.talosintelligence.com/the-closed-quorum-inside-the-firs))
+  ([Cisco Talos](https://blog.talosintelligence.com/the-closed-quorum-inside-the-first-reported-autonomous-ai-c2-implant/))
   arrived with essentially one graph-building object attached to it.
 - *Placeholder Domains Whose Ads Serve Scams*
-  ([Manifold Security](https://manifold.security/blog/placeholder-domains-ads-serve-sca))
-  the same.
+  ([Manifold Security](https://www.manifold.security/blog/placeholder-domains-ads-serve-scams))
+  arrived in the same state.
 
 On reports like those, the connector goes from "a node with some indicators
 hanging off it" to something that answers a query. That is the case for doing this

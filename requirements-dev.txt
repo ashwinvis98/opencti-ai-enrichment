@@ -1,6 +1,10 @@
-# Test and lint dependencies.
+# Test dependencies.
 #
-# The suite deliberately runs WITHOUT pycti or the Gemini SDK installed: it
-# stubs both, makes no network calls, and needs no credentials. So this file is
-# only pytest. Installing requirements.txt as well is fine but not required.
+# The suite deliberately runs WITHOUT pycti or the Gemini SDK installed: it stubs
+# both, makes no network calls, and needs no credentials. So this file is only
+# pytest, and CI installs only this file — which makes the "runs with no
+# credentials" claim in the README something the build proves rather than
+# something the README asserts.
+#
+# Installing requirements.txt as well is harmless but changes nothing.
 pytest>=8.0
