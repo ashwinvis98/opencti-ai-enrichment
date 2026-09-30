@@ -116,15 +116,15 @@ this technique id exist. Those are the questions this codebase answers in Python
 The industry has been repricing exactly this kind of work, publicly and
 expensively.
 
-Google [announced its acquisition of Mandiant in March
-2022](https://blog.google/products/google-cloud/google-acquisition-mandiant/) for
-**$5.4 billion** in an all-cash deal at $23.00 per share — roughly a 57% premium
-to the pre-announcement price — and closed it that September, folding Mandiant
-into Google Cloud. Three years later Google [agreed to acquire the cloud security
-company Wiz for $32 billion](https://blog.google/inside-google/company-announcements/google-agrees-to-acquire-wiz/),
+Google announced its acquisition of Mandiant in March 2022 for **$5.4 billion** in
+an all-cash deal at $23.00 per share — roughly a 57% premium to the
+pre-announcement price — and [completed it that
+September](https://cloud.google.com/blog/products/identity-security/google-completes-acquisition-of-mandiant),
+folding Mandiant into Google Cloud. Three years later Google [signed an agreement
+to acquire the cloud security company Wiz for $32
+billion](https://www.prnewswire.com/news-releases/google-announces-agreement-to-acquire-wiz-302404500.html),
 announced March 2025 and closed in March 2026: its largest acquisition ever by a
-wide margin, comfortably past Motorola Mobility at $12.5 billion in 2012, for a
-company that had passed $1 billion in annual recurring revenue.
+wide margin, more than double Motorola Mobility at $12.5 billion in 2012.
 
 You can read the strategy several ways, but the direction is not ambiguous.
 Security expertise is being bought by the companies that own the compute and the

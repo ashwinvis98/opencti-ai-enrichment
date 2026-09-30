@@ -48,19 +48,25 @@ hanging off it" to something that answers a query. That is the case for doing th
 at all, and it is much stronger on thin content than on rich content.
 
 **It fills the gap the feed structurally leaves.** *DarkMe RAT: A VB6 APT Trojan
-Turned Conventional Infostealer*
-([Huntress](https://www.huntress.com/blog/darkme-rat-abandons-exploits)) is the
-example I keep coming back to. A report named after a malware family, carrying
-hundreds of indicators, and barely connected to that family. The feed had done the
-mechanical part perfectly and skipped the judgement. Gemini named the family and
-the actor from the prose, which is exactly the work that was missing.
+Turned Conventional Infostealer* — the feed's title for
+[a Huntress write-up](https://www.huntress.com/blog/darkme-rat-abandons-exploits)
+headlined differently — is the example I keep coming back to. A report named after
+a malware family, carrying hundreds of indicators, and barely connected to that
+family. The feed had done the mechanical part perfectly and skipped the judgement.
+Gemini named the family and the actor from the prose, which is exactly the work
+that was missing.
 
-*Konni Hackers Target Ukraine With Malicious LNK Files*
-([Cyber Press](https://cyberpress.org/konni-targets-ukraine-with-velvetcake/))
+*Konni Hackers Target Ukraine With Malicious LNK Files and VelvetCake PowerShell
+Malware* ([Cyber Press](https://cyberpress.org/konni-targets-ukraine-with-velvetcake/))
 behaved similarly — it came in with a small handful of graph links and the model
 named the actor, two malware families, a set of techniques, several sectors and a
 country. The report was already *about* all of that. Nothing was inferred; it was
 read.
+
+> A note on the titles in this document: they are the report names **as the feed
+> recorded them**, which is not always the vendor's own headline. Feeds retitle. It
+> is a small thing, but it is the title in the graph that an analyst searches
+> against, so it is the one worth quoting.
 
 **Deterministic wins.** Countries resolve essentially perfectly. CVEs that already
 exist resolve essentially perfectly. Where the title spells out an acronym the
