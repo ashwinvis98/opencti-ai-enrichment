@@ -1,0 +1,11 @@
+# IMPORTANT: pin pycti to EXACTLY the version of the OpenCTI platform you run,
+# e.g. `pycti==6.4.0`. A mismatch between the SDK and the platform fails
+# SILENTLY rather than loudly — wrong filter keys are rejected as schema errors,
+# and `note.create` takes **kwargs so a renamed argument is simply dropped. Both
+# of those cost real debugging time to find.
+#
+# The lower bound below is the minimum this connector is known to work against.
+pycti>=6.4
+
+# Bounded so a major release cannot change behaviour without an explicit bump.
+google-genai>=1.0,<2

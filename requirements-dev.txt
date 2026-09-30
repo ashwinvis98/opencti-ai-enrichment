@@ -1,0 +1,6 @@
+# Test and lint dependencies.
+#
+# The suite deliberately runs WITHOUT pycti or the Gemini SDK installed: it
+# stubs both, makes no network calls, and needs no credentials. So this file is
+# only pytest. Installing requirements.txt as well is fine but not required.
+pytest>=8.0
