@@ -1,4 +1,4 @@
-# opencti-guarded-enrichment
+# opencti-ai-enrichment
 
 An OpenCTI enrichment connector where the language model **proposes** entities and
 relationships, and deterministic code **decides** what — if anything — reaches the
@@ -7,7 +7,7 @@ knowledge graph.
 It reads a report with Gemini, connects it to the actors and malware families the
 feed left out, and refuses the proposals that would do damage.
 
-[![CI](https://github.com/ashwinvis98/opencti-guarded-enrichment/actions/workflows/ci.yml/badge.svg)](../../actions/workflows/ci.yml)
+[![CI](https://github.com/ashwinvis98/opencti-ai-enrichment/actions/workflows/ci.yml/badge.svg)](../../actions/workflows/ci.yml)
 
 ---
 
@@ -85,8 +85,8 @@ context, and an unsupervised critic to a subordinate one — are in
 ## Quick start
 
 ```bash
-git clone https://github.com/ashwinvis98/opencti-guarded-enrichment
-cd opencti-guarded-enrichment
+git clone https://github.com/ashwinvis98/opencti-ai-enrichment
+cd opencti-ai-enrichment
 
 # The test suite needs no credentials, no network and no OpenCTI.
 pip install -r requirements-dev.txt
@@ -98,8 +98,8 @@ To run it against a platform:
 ```bash
 cp .env.example .env
 # fill in GEMINI_API_KEY, OPENCTI_TOKEN, CONNECTOR_ID
-docker build -t opencti-guarded-enrichment .
-docker run --env-file .env -v enrichment-state:/state opencti-guarded-enrichment
+docker build -t opencti-ai-enrichment .
+docker run --env-file .env -v enrichment-state:/state opencti-ai-enrichment
 ```
 
 A **named volume** for `/state`, not a bind mount. The image creates `/state` owned

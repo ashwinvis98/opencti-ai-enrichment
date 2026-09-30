@@ -1,4 +1,4 @@
-"""opencti-guarded-enrichment.
+"""opencti-ai-enrichment.
 
 An OpenCTI INTERNAL_ENRICHMENT connector where the language model PROPOSES
 entities and relationships and deterministic code DECIDES what, if anything,
