@@ -1,0 +1,102 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 740" width="900" height="740" role="img" aria-labelledby="t d">
+  <title id="t">Per-category creation gating</title>
+  <desc id="d">Five entity categories each have their own three-position setting: off, dry-run,
+  on. All five currently sit at dry-run. Promotion moves one category at a time, left to right,
+  on that category's own evidence. Two further categories, Attack-Patterns and CVEs, have no
+  setting at all and are permanently lookup-only.</desc>
+
+  <style>
+    .bg   { fill: #fbfaf8; }
+    .ttl  { font: 600 21px ui-sans-serif, -apple-system, "Segoe UI", Roboto, sans-serif; fill: #1f2933; }
+    .sub  { font: 400 14px ui-sans-serif, -apple-system, "Segoe UI", Roboto, sans-serif; fill: #6b7280; }
+    .colh { font: 600 15px ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; fill: #1f2933; }
+    .cold { font: 400 12px ui-sans-serif, -apple-system, "Segoe UI", Roboto, sans-serif; fill: #6b7280; }
+    .cat  { font: 400 14px ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; fill: #1f2933; }
+    .note { font: 400 13px ui-sans-serif, -apple-system, "Segoe UI", Roboto, sans-serif; fill: #4b5563; }
+    .mono { font: 400 12.5px ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; fill: #6b7280; }
+    .hdr  { font: 600 15px ui-sans-serif, -apple-system, "Segoe UI", Roboto, sans-serif; fill: #1f2933; }
+    .rule { stroke: #cbd5e1; stroke-width: 1; }
+    .trk  { stroke: #d7dde5; stroke-width: 2; }
+    .cell { fill: #ffffff; stroke: #cbd5e1; stroke-width: 1.2; }
+    .live { fill: #eef2f7; stroke: #b6c2d1; stroke-width: 1.2; }
+    .here { fill: #4b5563; }
+    .open { fill: #ffffff; stroke: #aab4c0; stroke-width: 1.6; }
+    .gone { fill: #f1f1ef; stroke: #c3c3bd; stroke-width: 1.2; }
+    .arw  { stroke: #94a3b8; stroke-width: 1.6; fill: none; }
+  </style>
+
+  <rect class="bg" x="0" y="0" width="900" height="740"/>
+
+  <text class="ttl" x="40" y="46">Write access is earned one category at a time</text>
+  <text class="sub" x="40" y="70">Each category has its own setting. The aggregate is not the unit of decision, because the</text>
+  <text class="sub" x="40" y="89">categories do not behave alike — on a blended number the noisy ones hide behind the clean ones.</text>
+
+  <!-- column headers -->
+  <rect class="cell" x="250" y="120" width="170" height="62" rx="5"/>
+  <text class="colh" x="335" y="142" text-anchor="middle">off</text>
+  <text class="cold" x="335" y="162" text-anchor="middle">link only to what</text>
+  <text class="cold" x="335" y="176" text-anchor="middle">already exists</text>
+
+  <rect class="live" x="434" y="120" width="170" height="62" rx="5"/>
+  <text class="colh" x="519" y="142" text-anchor="middle">dry-run</text>
+  <text class="cold" x="519" y="162" text-anchor="middle">log what it WOULD</text>
+  <text class="cold" x="519" y="176" text-anchor="middle">create, write nothing</text>
+
+  <rect class="cell" x="618" y="120" width="170" height="62" rx="5"/>
+  <text class="colh" x="703" y="142" text-anchor="middle">on</text>
+  <text class="cold" x="703" y="162" text-anchor="middle">create it, tagged</text>
+  <text class="cold" x="703" y="176" text-anchor="middle">ai-suggested</text>
+
+  <text class="mono" x="40" y="212">AI_CREATE_*</text>
+  <text class="mono" x="788" y="212" text-anchor="end">current state</text>
+
+  <!-- rows -->
+  <g>
+    <line class="trk" x1="300" y1="244" x2="738" y2="244"/>
+    <text class="cat" x="280" y="249" text-anchor="end">actor</text>
+    <circle class="open" cx="335" cy="244" r="6"/><circle class="here" cx="519" cy="244" r="7"/><circle class="open" cx="703" cy="244" r="6"/>
+
+    <line class="trk" x1="300" y1="290" x2="738" y2="290"/>
+    <text class="cat" x="280" y="295" text-anchor="end">malware</text>
+    <circle class="open" cx="335" cy="290" r="6"/><circle class="here" cx="519" cy="290" r="7"/><circle class="open" cx="703" cy="290" r="6"/>
+
+    <line class="trk" x1="300" y1="336" x2="738" y2="336"/>
+    <text class="cat" x="280" y="341" text-anchor="end">tool</text>
+    <circle class="open" cx="335" cy="336" r="6"/><circle class="here" cx="519" cy="336" r="7"/><circle class="open" cx="703" cy="336" r="6"/>
+
+    <line class="trk" x1="300" y1="382" x2="738" y2="382"/>
+    <text class="cat" x="280" y="387" text-anchor="end">victim</text>
+    <circle class="open" cx="335" cy="382" r="6"/><circle class="here" cx="519" cy="382" r="7"/><circle class="open" cx="703" cy="382" r="6"/>
+    <text class="mono" x="756" y="387">noisiest</text>
+
+    <line class="trk" x1="300" y1="428" x2="738" y2="428"/>
+    <text class="cat" x="280" y="433" text-anchor="end">sector</text>
+    <circle class="open" cx="335" cy="428" r="6"/><circle class="here" cx="519" cy="428" r="7"/><circle class="open" cx="703" cy="428" r="6"/>
+  </g>
+
+  <path class="arw" d="M519 462 L703 462" marker-end="url(#a)"/>
+  <text class="mono" x="611" y="482" text-anchor="middle">promoted only on its own evidence</text>
+
+  <!-- permanently lookup-only -->
+  <line class="rule" x1="40" y1="524" x2="860" y2="524" stroke-dasharray="5 4"/>
+  <text class="hdr" x="40" y="556">No setting at all — permanently lookup-only</text>
+
+  <rect class="gone" x="40" y="572" width="200" height="44" rx="5"/>
+  <text class="cat" x="140" y="599" text-anchor="middle">attack-pattern</text>
+  <rect class="gone" x="256" y="572" width="200" height="44" rx="5"/>
+  <text class="cat" x="356" y="599" text-anchor="middle">cve</text>
+
+  <text class="note" x="476" y="590">MITRE ATT&amp;CK and NVD own these namespaces.</text>
+  <text class="note" x="476" y="608">There is no variable to turn either one on.</text>
+
+  <text class="note" x="40" y="650">CVE creation was not set to off — it was deleted, with a test asserting it stays gone. A fabricated</text>
+  <text class="note" x="40" y="670">identifier can arrive in the feed's own report title, so it is present in the analysed text and the</text>
+  <text class="note" x="40" y="690">groundedness check passes it. A guard that cannot observe the failure is worse than no guard,</text>
+  <text class="note" x="40" y="710">because it justifies confidence.</text>
+
+  <defs>
+    <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0 0 L10 5 L0 10 z" fill="#94a3b8"/>
+    </marker>
+  </defs>
+</svg>

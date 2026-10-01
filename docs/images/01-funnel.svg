@@ -1,0 +1,109 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 1080" width="900" height="1080" role="img" aria-labelledby="t d">
+  <title id="t">The enrichment decision funnel</title>
+  <desc id="d">A vertical funnel. Two model stages at the top produce proposals. Below a
+  dividing line, eight deterministic stages each narrow the funnel further, and every one
+  of them can only remove proposals. What survives reaches the knowledge graph.</desc>
+
+  <style>
+    .bg    { fill: #fbfaf8; }
+    .ttl   { font: 600 21px/1.3 ui-sans-serif, -apple-system, "Segoe UI", Roboto, sans-serif; fill: #1f2933; }
+    .sub   { font: 400 14px ui-sans-serif, -apple-system, "Segoe UI", Roboto, sans-serif; fill: #6b7280; }
+    .box   { font: 600 15px ui-sans-serif, -apple-system, "Segoe UI", Roboto, sans-serif; fill: #1f2933; }
+    .mono  { font: 400 12.5px ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; fill: #6b7280; }
+    .drop  { font: 400 12.5px ui-sans-serif, -apple-system, "Segoe UI", Roboto, sans-serif; fill: #9a3412; }
+    .note  { font: 400 13px ui-sans-serif, -apple-system, "Segoe UI", Roboto, sans-serif; fill: #4b5563; }
+    .rule  { stroke: #cbd5e1; stroke-width: 1; }
+    .arrow { stroke: #94a3b8; stroke-width: 1.6; fill: none; }
+    .mstage { fill: #eef2f7; stroke: #b6c2d1; stroke-width: 1.2; }
+    .dstage { fill: #ffffff; stroke: #cbd5e1; stroke-width: 1.2; }
+    .graph  { fill: #eaf3ec; stroke: #8fb89a; stroke-width: 1.4; }
+  </style>
+
+  <rect class="bg" x="0" y="0" width="900" height="1080"/>
+
+  <text class="ttl" x="40" y="46">The model proposes. Deterministic code decides.</text>
+  <text class="sub" x="40" y="70">Every stage below the line can only remove. Nothing re-admits what a guard refused.</text>
+
+  <!-- ===== model stages ===== -->
+  <text class="mono" x="40" y="108">THE MODEL</text>
+
+  <rect class="mstage" x="150" y="122" width="600" height="52" rx="6"/>
+  <text class="box" x="170" y="145">Typed extraction</text>
+  <text class="mono" x="170" y="163">prompts.py — one typed contract per entity type</text>
+
+  <path class="arrow" d="M450 174 L450 196" marker-end="url(#a)"/>
+
+  <rect class="mstage" x="176" y="196" width="548" height="52" rx="6"/>
+  <text class="box" x="196" y="219">Critic pass <tspan class="mono">(optional)</tspan></text>
+  <text class="mono" x="196" y="237">may DROP or RECLASSIFY — never approve. Gated by the guards below.</text>
+
+  <path class="arrow" d="M450 248 L450 276" marker-end="url(#a)"/>
+
+  <!-- ===== the line ===== -->
+  <line class="rule" x1="40" y1="290" x2="860" y2="290" stroke-dasharray="5 4"/>
+  <text class="mono" x="40" y="283">EVERYTHING BELOW HERE IS DETERMINISTIC PYTHON</text>
+
+  <!-- ===== deterministic stages ===== -->
+  <g>
+    <rect class="dstage" x="196" y="306" width="508" height="46" rx="6"/>
+    <text class="box" x="216" y="327">Shape guards</text>
+    <text class="mono" x="216" y="344">is this a name at all?</text>
+    <text class="drop" x="724" y="334">junk · generic · collective</text>
+
+    <rect class="dstage" x="212" y="366" width="476" height="46" rx="6"/>
+    <text class="box" x="232" y="387">Category vocabularies</text>
+    <text class="mono" x="232" y="404">is it the KIND of thing it claims?</text>
+    <text class="drop" x="708" y="394">infra · security product · miner</text>
+
+    <rect class="dstage" x="228" y="426" width="444" height="46" rx="6"/>
+    <text class="box" x="248" y="447">Victim vs actor</text>
+    <text class="mono" x="248" y="464">classify the document, then read the evidence</text>
+    <text class="drop" x="692" y="454">the breached company</text>
+
+    <rect class="dstage" x="244" y="486" width="412" height="46" rx="6"/>
+    <text class="box" x="264" y="507">Controlled taxonomies</text>
+    <text class="mono" x="264" y="524">ATT&amp;CK ids · CVE format · curated sectors</text>
+    <text class="drop" x="676" y="514">invented identifiers</text>
+
+    <rect class="dstage" x="260" y="546" width="380" height="46" rx="6"/>
+    <text class="box" x="280" y="567">Dedup</text>
+    <text class="mono" x="280" y="584">three key layers, plus a cross-type claim ledger</text>
+    <text class="drop" x="660" y="574">near-duplicates</text>
+
+    <rect class="dstage" x="276" y="606" width="348" height="46" rx="6"/>
+    <text class="box" x="296" y="627">Groundedness</text>
+    <text class="mono" x="296" y="644">gates CREATION only, never linking</text>
+    <text class="drop" x="644" y="634">names not in the source</text>
+
+    <rect class="dstage" x="292" y="666" width="316" height="46" rx="6"/>
+    <text class="box" x="312" y="687">Relationship schema</text>
+    <text class="mono" x="312" y="704">checked against OpenCTI's schema</text>
+    <text class="drop" x="628" y="694">impossible edges</text>
+
+    <rect class="dstage" x="308" y="726" width="284" height="46" rx="6"/>
+    <text class="box" x="328" y="747">Creation mode</text>
+    <text class="mono" x="328" y="764">off · dry-run · on, per category</text>
+    <text class="drop" x="612" y="754">anything unearned</text>
+  </g>
+
+  <path class="arrow" d="M450 772 L450 800" marker-end="url(#a)"/>
+
+  <rect class="graph" x="324" y="800" width="252" height="50" rx="6"/>
+  <text class="box" x="450" y="823" text-anchor="middle">The knowledge graph</text>
+  <text class="mono" x="450" y="840" text-anchor="middle">tagged ai-suggested</text>
+
+  <!-- ===== notes ===== -->
+  <line class="rule" x1="40" y1="892" x2="860" y2="892"/>
+  <text class="note" x="40" y="922">Reasoning about what this connector can do to a graph means reading the guard layer,</text>
+  <text class="note" x="40" y="942">not predicting a model's behaviour. Anything it does create carries an ai-suggested</text>
+  <text class="note" x="40" y="962">label, so the whole experiment is reversible with one query.</text>
+  <text class="note" x="40" y="1000">Two categories sit outside the funnel entirely. Attack-Patterns and CVEs are permanently</text>
+  <text class="note" x="40" y="1020">lookup-only against MITRE ATT&amp;CK and NVD — there is no setting that turns them on, because</text>
+  <text class="note" x="40" y="1040">a fabricated identifier can arrive in the source text and pass the groundedness check.</text>
+
+  <defs>
+    <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0 0 L10 5 L0 10 z" fill="#94a3b8"/>
+    </marker>
+  </defs>
+</svg>

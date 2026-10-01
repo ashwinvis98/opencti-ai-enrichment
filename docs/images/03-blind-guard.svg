@@ -1,0 +1,97 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 660" width="900" height="660" role="img" aria-labelledby="t d">
+  <title id="t">Why CVE creation was removed: a guard that could not see the failure</title>
+  <desc id="d">A proposed CVE identifier passes a shape check and a groundedness check, and would
+  have been created. The groundedness check passes because the fabricated identifier arrives inside
+  the source feed's own report title, so it genuinely is present in the analysed text. The question
+  neither check asks is whether the identifier exists at NVD or CVE.org, where it is absent.</desc>
+
+  <style>
+    .bg   { fill: #fbfaf8; }
+    .ttl  { font: 600 21px ui-sans-serif, -apple-system, "Segoe UI", Roboto, sans-serif; fill: #1f2933; }
+    .sub  { font: 400 14px ui-sans-serif, -apple-system, "Segoe UI", Roboto, sans-serif; fill: #6b7280; }
+    .lbl  { font: 600 11.5px ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; fill: #9ca3af; letter-spacing: .06em; }
+    .box  { font: 600 14px ui-sans-serif, -apple-system, "Segoe UI", Roboto, sans-serif; fill: #1f2933; }
+    .mono { font: 400 12px ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; fill: #6b7280; }
+    .pass { font: 600 11.5px ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; fill: #4d7c54; letter-spacing: .08em; }
+    .miss { font: 600 11.5px ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; fill: #9a3412; letter-spacing: .08em; }
+    .note { font: 400 13px ui-sans-serif, -apple-system, "Segoe UI", Roboto, sans-serif; fill: #4b5563; }
+    .cell { fill: #ffffff; stroke: #cbd5e1; stroke-width: 1.2; }
+    .warn { fill: #fdf6f2; stroke: #d8b7a4; stroke-width: 1.2; }
+    .reg  { fill: #f6f6f4; stroke: #c3c3bd; stroke-width: 1.2; }
+    .rule { stroke: #cbd5e1; stroke-width: 1; }
+    .arw  { stroke: #94a3b8; stroke-width: 1.6; fill: none; }
+  </style>
+
+  <rect class="bg" x="0" y="0" width="900" height="660"/>
+
+  <text class="ttl" x="40" y="44">A guard that cannot observe the failure</text>
+  <text class="sub" x="40" y="68">Both checks did exactly what they were written to do, and both were satisfied. The thing</text>
+  <text class="sub" x="40" y="87">that made the entity wrong was not a property either one looks at.</text>
+
+  <!-- the checks that passed -->
+  <text class="lbl" x="40" y="122">THE CHECKS THAT PASSED</text>
+
+  <rect class="cell" x="40" y="136" width="150" height="58" rx="5"/>
+  <text class="box" x="115" y="159" text-anchor="middle">proposed</text>
+  <text class="mono" x="115" y="178" text-anchor="middle">CVE-20XX-NNNNN</text>
+
+  <path class="arw" d="M190 165 L216 165" marker-end="url(#a)"/>
+
+  <rect class="cell" x="220" y="136" width="190" height="58" rx="5"/>
+  <text class="box" x="315" y="159" text-anchor="middle">shape check</text>
+  <text class="mono" x="315" y="178" text-anchor="middle">CVE-dddd-dddd+</text>
+  <text class="pass" x="315" y="212" text-anchor="middle">PASS</text>
+
+  <path class="arw" d="M410 165 L436 165" marker-end="url(#a)"/>
+
+  <rect class="cell" x="440" y="136" width="190" height="58" rx="5"/>
+  <text class="box" x="535" y="159" text-anchor="middle">groundedness</text>
+  <text class="mono" x="535" y="178" text-anchor="middle">in the source text?</text>
+  <text class="pass" x="535" y="212" text-anchor="middle">PASS</text>
+
+  <path class="arw" d="M630 165 L656 165" marker-end="url(#a)"/>
+
+  <rect class="warn" x="660" y="136" width="200" height="58" rx="5"/>
+  <text class="box" x="760" y="159" text-anchor="middle">would be created</text>
+  <text class="mono" x="760" y="178" text-anchor="middle">permanent graph debt</text>
+
+  <!-- why groundedness passed -->
+  <line class="rule" x1="40" y1="248" x2="860" y2="248" stroke-dasharray="5 4"/>
+  <text class="lbl" x="40" y="280">WHY THE GROUNDEDNESS CHECK PASSED IT</text>
+
+  <rect class="cell" x="40" y="296" width="470" height="62" rx="5"/>
+  <text class="mono" x="60" y="320">the feed's own report title:</text>
+  <text class="mono" x="60" y="342" style="fill:#1f2933">"... advisory covers CVE-20XX-NNNNN ..."</text>
+
+  <text class="note" x="534" y="318">The identifier really is in the analysed text.</text>
+  <text class="note" x="534" y="338">Grounding answers "is this string in the</text>
+  <text class="note" x="534" y="358">document" — and the answer is yes.</text>
+
+  <!-- the question nobody asked -->
+  <line class="rule" x1="40" y1="398" x2="860" y2="398" stroke-dasharray="5 4"/>
+  <text class="lbl" x="40" y="430">THE QUESTION NEITHER CHECK ASKS</text>
+
+  <rect class="reg" x="40" y="446" width="200" height="56" rx="5"/>
+  <text class="box" x="140" y="470" text-anchor="middle">NVD</text>
+  <text class="miss" x="140" y="490" text-anchor="middle">NOT FOUND</text>
+
+  <rect class="reg" x="256" y="446" width="200" height="56" rx="5"/>
+  <text class="box" x="356" y="470" text-anchor="middle">CVE.org</text>
+  <text class="miss" x="356" y="490" text-anchor="middle">NOT FOUND</text>
+
+  <text class="note" x="480" y="470">Does this identifier exist at all?</text>
+  <text class="note" x="480" y="490">Nothing in the funnel was asking.</text>
+
+  <!-- conclusion -->
+  <line class="rule" x1="40" y1="540" x2="860" y2="540"/>
+  <text class="note" x="40" y="572">A weak guard makes you cautious, because you know it leaks. A blind guard makes you</text>
+  <text class="note" x="40" y="592">confident, which is the thing you were trying to earn honestly.</text>
+  <text class="note" x="40" y="624">So the fix was not a better threshold. It was removing the capability the guard was</text>
+  <text class="note" x="40" y="644">supposed to protect: CVE creation is gone, with a test asserting it stays gone.</text>
+
+  <defs>
+    <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0 0 L10 5 L0 10 z" fill="#94a3b8"/>
+    </marker>
+  </defs>
+</svg>
