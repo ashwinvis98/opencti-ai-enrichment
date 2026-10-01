@@ -38,6 +38,11 @@ htmlcov/
 .mypy_cache/
 .ruff_cache/
 
+# --- Scratch files used to pass multi-line commit messages to git -F ---
+# PowerShell has no heredoc, so these get written next to the repo and deleted.
+# Ignored so a `git add -A` cannot sweep one into a commit.
+_*.tmp
+
 # --- Editors / OS ---
 .vscode/
 .idea/

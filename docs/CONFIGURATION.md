@@ -88,7 +88,7 @@ strongest parse guarantee available and falling back to prompt instructions plus
 fence-stripping. And search grounding draws on a separate, tightly-capped quota.
 Fetching the referenced article yourself (`AI_FETCH_REFS`) costs no model quota
 and is deterministic — you control exactly what the model sees. That tradeoff is
-discussed at length in [DESIGN.md](../DESIGN.md).
+discussed in the [README](../README.md#six-reversals).
 
 ---
 
@@ -228,7 +228,7 @@ Off by default because it doubles the call count per enrichment.
 The critic is advisory to a deterministic gate, not an authority. It can *drop*
 or *reclassify* a proposal; it cannot approve one that the deterministic guards
 reject. That ordering is deliberate and is the subject of one of the reversals
-described in [DESIGN.md](../DESIGN.md) — an LLM reviewing an LLM produces a
+described in the [README](../README.md#six-reversals) — an LLM reviewing an LLM produces a
 confident second opinion, which is not the same thing as a check.
 
 ---
@@ -351,6 +351,6 @@ AI_AUDIT_LOG=/state/ai_audit.log
 
 Run that against real traffic for long enough to accumulate a would-create ledger
 you can actually judge. Then promote one category at a time, as each earns it. The
-reasoning behind that sequence is in [DESIGN.md](../DESIGN.md), and
+reasoning behind that sequence is in the [README](../README.md#rolling-it-out), and
 [OBSERVATIONS.md](../OBSERVATIONS.md) describes what the model got right and wrong
 when it was applied.
